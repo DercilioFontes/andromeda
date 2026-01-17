@@ -9,6 +9,7 @@ pub mod format;
 pub mod helper;
 pub mod lint;
 pub mod run;
+pub mod test;
 
 #[derive(Debug)]
 pub enum CliError {

@@ -24,6 +24,7 @@ mod process;
 #[cfg(feature = "storage")]
 mod sqlite;
 mod streams;
+mod test;
 mod time;
 pub mod tls;
 mod url;
@@ -55,6 +56,7 @@ pub use process::*;
 #[cfg(feature = "storage")]
 pub use sqlite::*;
 pub use streams::*;
+pub use test::*;
 pub use time::*;
 pub use tls::*;
 pub use url::*;

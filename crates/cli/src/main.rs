@@ -29,6 +29,8 @@ mod lint;
 use lint::lint_file_with_config;
 mod check;
 use check::check_files_with_config;
+mod test;
+use test::run_tests;
 mod config;
 mod lsp;
 mod task;
@@ -153,6 +155,21 @@ enum Command {
         /// The file(s) or directory(ies) to type-check
         #[arg(required = false)]
         paths: Vec<PathBuf>,
+    },
+
+    /// Run tests
+    Test {
+        /// The file(s) or directory(ies) to test
+        #[arg(required = false)]
+        paths: Vec<PathBuf>,
+
+        /// Enable verbose output
+        #[arg(short, long)]
+        verbose: bool,
+
+        /// Watch mode - rerun tests on file changes
+        #[arg(short, long)]
+        watch: bool,
     },
 
     /// Start Language Server Protocol (LSP) server
@@ -477,6 +494,9 @@ fn run_main() -> Result<()> {
                 let config = ConfigManager::load_or_default(None);
 
                 check_files_with_config(&paths, Some(config))
+            }
+            Command::Test { paths, verbose, watch } => {
+                run_tests(paths, verbose, watch)
             }
             Command::Lsp => {
                 run_lsp_server().map_err(|e| {
